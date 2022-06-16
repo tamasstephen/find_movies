@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useState, SyntheticEvent } from "react";
+import Input from "../component/Input";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
@@ -11,6 +12,11 @@ const Home: NextPage = () => {
     setSearchValue(input.value);
   }
 
+  function handleSubmit(event: SyntheticEvent) {
+    event.preventDefault();
+    console.log(event);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -20,7 +26,10 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <form action=""></form>
+        <form onSubmit={(event) => handleSubmit(event)}>
+          <Input value={searchValue} setValue={handleInputChange} />
+          <button type="submit">Find Movie</button>
+        </form>
       </main>
     </div>
   );
