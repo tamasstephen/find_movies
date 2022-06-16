@@ -27,7 +27,12 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <form onSubmit={(event) => handleSubmit(event)}>
-          <Input value={searchValue} setValue={handleInputChange} />
+          <Input
+            value={searchValue}
+            setValue={handleInputChange}
+            label={"Find a movie..."}
+            name="text"
+          />
           <button type="submit">Find Movie</button>
         </form>
       </main>
