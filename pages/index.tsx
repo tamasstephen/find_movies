@@ -1,9 +1,16 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from "next";
+import { useState, SyntheticEvent } from "react";
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
+  const [searchValue, setSearchValue] = useState("");
+
+  function handleInputChange(event: SyntheticEvent) {
+    const input = event.target as HTMLInputElement;
+    setSearchValue(input.value);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -17,6 +24,6 @@ const Home: NextPage = () => {
       </main>
     </div>
   );
-}
+};
 
-export default Home
+export default Home;
