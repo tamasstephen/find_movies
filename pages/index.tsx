@@ -5,9 +5,11 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { dataHandler } from "../data/dataHandler";
 import { Movie } from "../model/Movie";
+import MovieCard from "../component/MovieCard";
 
 const Home: NextPage = () => {
   const [searchValue, setSearchValue] = useState("");
+  const [searchedMovies, setSearchedMovies]: [Movie[], Function] = useState([]);
 
   function handleInputChange(event: SyntheticEvent) {
     const input = event.target as HTMLInputElement;
@@ -18,6 +20,7 @@ const Home: NextPage = () => {
     event.preventDefault();
     const data = await dataHandler.getMoviesByName(searchValue);
     const movies: Movie[] = data.data.searchMovies;
+    setSearchedMovies((): Movie[] => [...movies]);
   }
 
   return (
@@ -38,6 +41,17 @@ const Home: NextPage = () => {
           />
           <button type="submit">Find Movie</button>
         </form>
+        <div>
+          {searchedMovies.map((movie: Movie) => (
+            <MovieCard
+              title={movie.name}
+              imgUrl={movie.img?.url}
+              overview={movie.overview}
+              score={movie.score}
+              key={+movie.id}
+            />
+          ))}
+        </div>
       </main>
     </div>
   );
