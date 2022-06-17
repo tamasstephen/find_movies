@@ -15,10 +15,12 @@ const Input = ({ value, setValue, label, name }: Props) => {
         {label}
       </label>
       <input
+        className={styles.input}
         type="text"
         value={value}
         id={name}
         name={name}
+        placeholder={label}
         onChange={(event) => setValue(event)}
       />
     </div>

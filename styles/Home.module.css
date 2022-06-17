@@ -1,16 +1,34 @@
 .container {
-  padding: 0 2rem;
+  width: 95%;
 }
-
-
 .noScroll{
   height: 100vh;
   overflow: hidden;
 }
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
+.upper {
+  background-image: linear-gradient(to top,#fdfcfb 0%,  #ffe4e1 20%, #e2d1c3 90%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8rem 1rem;
+}
+
+@media screen and (min-width: 768px){
+  .upper {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container {
+    max-width: 50%;
   }
 }
+
+@media screen and (min-width: 1024px){
+  .container {
+    max-width: 600px;
+  }
+
+}
+
