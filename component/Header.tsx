@@ -1,11 +1,18 @@
-import React from "react";
-
 interface Props {
-  text: string;
+  firstLine: string;
+  secondLine: string;
+  colourText: string;
 }
 
-const Header = ({ text }: Props) => {
-  return <div>{text}</div>;
+const Header = ({ firstLine, secondLine, colourText }: Props) => {
+  return (
+    <h1>
+      {firstLine}
+      <br />
+      {secondLine}
+      <span className="gradientText"> {colourText}</span>
+    </h1>
+  );
 };
 
 export default Header;
