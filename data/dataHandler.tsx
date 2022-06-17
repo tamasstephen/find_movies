@@ -48,9 +48,7 @@ export const dataHandler = {
       `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&${endpoint}`
     );
     if (data.status === 200) {
-      console.log(data);
       const result = await data.json();
-      console.log(result);
       return result;
     }
     return null;
