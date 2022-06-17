@@ -14,7 +14,7 @@ const MovieCard = ({ title, imgUrl, overview, score, fn }: Props) => {
     <div>
       <img src={imgSrc} alt={title} width={185} height={278} />
       <div>
-        <a onClick={() => fn(title)}>
+        <a onClick={() => fn(title, score, imgSrc)}>
           <h3>{title}</h3>
         </a>
         <p>{overview}</p>

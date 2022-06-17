@@ -6,6 +6,7 @@ import styles from "../styles/Home.module.css";
 import { dataHandler } from "../data/dataHandler";
 import { Movie } from "../model/Movie";
 import MovieCard from "../component/MovieCard";
+import Header from "../component/Header";
 
 const Home: NextPage = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -65,6 +66,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+        <Header text="Find your favourite movie" />
         <form onSubmit={(event) => handleSubmit(event)}>
           <Input
             value={searchValue}
