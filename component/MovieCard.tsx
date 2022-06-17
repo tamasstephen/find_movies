@@ -5,19 +5,16 @@ interface Props {
   imgUrl: string;
   overview: string;
   score: number;
+  fn: Function;
 }
 
-const MovieCard = ({ title, imgUrl, overview, score }: Props) => {
-  function loadDetails() {
-    console.log("details incoming");
-  }
-
+const MovieCard = ({ title, imgUrl, overview, score, fn }: Props) => {
   const imgSrc = imgUrl ? imgUrl : "/vercel.svg";
   return (
     <div>
       <img src={imgSrc} alt={title} width={185} height={278} />
       <div>
-        <a onClick={loadDetails}>
+        <a onClick={() => fn(title)}>
           <h3>{title}</h3>
         </a>
         <p>{overview}</p>

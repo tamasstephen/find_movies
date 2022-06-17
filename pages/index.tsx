@@ -23,6 +23,39 @@ const Home: NextPage = () => {
     setSearchedMovies((): Movie[] => [...movies]);
   }
 
+  async function showMovieDetails(
+    movieTitle: string
+  ): Promise<{ content: string; wikiLink: string; imdbLink: string }> {
+    const result = { content: "", wikiLink: "", imdbLink: "" };
+    const pageDetails = await dataHandler.getWikiPage(movieTitle);
+    const movieId: string = Object.keys(pageDetails.query.pages)[0];
+    if (movieId === "-1") {
+      return result;
+    }
+
+    if (pageDetails.query.pages[movieId].hasOwnProperty("extract")) {
+      result.content = pageDetails.query.pages[movieId].extract;
+    }
+
+    result.wikiLink = `https://en.wikipedia.org/wiki/${movieTitle}`;
+
+    const pageLinks = await dataHandler.getWikiPageLinks(movieTitle);
+    const allLinks = pageLinks.query.pages[movieId].extlinks;
+    if (!pageLinks.query.pages[movieId].hasOwnProperty("extlinks")) {
+      return result;
+    }
+    const myLinkObj = allLinks.find((current: Object) =>
+      Object.values(current)[0].includes("imdb.com/title")
+    );
+    if (!myLinkObj) {
+      return result;
+    }
+
+    result.imdbLink = Object.values(myLinkObj)[0] as string;
+
+    return result;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -49,6 +82,7 @@ const Home: NextPage = () => {
               overview={movie.overview}
               score={movie.score}
               key={+movie.id}
+              fn={showMovieDetails}
             />
           ))}
         </div>
