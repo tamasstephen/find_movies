@@ -9,8 +9,13 @@ body {
 }
 
 a {
-  color: inherit;
+  color: blue;
   text-decoration: none;
+  cursor:pointer;
+}
+
+a:hover{
+  color:orange;
 }
 
 * {
@@ -61,6 +66,13 @@ button[type="submit"]{
   box-shadow: 0 .15rem .5rem .2rem rgba(135, 206, 250, .4);
 }
 
+img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  aspect-ratio: 1;
+}
+
 @media screen and (min-width: 1024px){
   h1 {
     font-size: 4.5rem;
@@ -69,7 +81,7 @@ button[type="submit"]{
   }
 
   form {
-    padding-top: 3rem;
+    padding-top: 2rem;
   }
 
 }

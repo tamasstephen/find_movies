@@ -131,17 +131,19 @@ const Home: NextPage = () => {
             </form>
           </div>
         </div>
-        <div>
-          {searchedMovies.map((movie: Movie) => (
-            <MovieCard
-              title={movie.name}
-              imgUrl={movie.img?.url}
-              overview={movie.overview}
-              score={movie.score}
-              key={+movie.id}
-              fn={showMovieDetails}
-            />
-          ))}
+        <div className={styles.containerWrapper}>
+          <div className={styles.cardContainer}>
+            {searchedMovies.map((movie: Movie) => (
+              <MovieCard
+                title={movie.name}
+                imgUrl={movie.img?.url}
+                overview={movie.overview}
+                score={movie.score}
+                key={+movie.id}
+                fn={showMovieDetails}
+              />
+            ))}
+          </div>
         </div>
       </main>
     </div>
