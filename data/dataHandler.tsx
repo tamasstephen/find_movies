@@ -28,4 +28,31 @@ export const dataHandler = {
     }
     return null;
   },
+
+  async getWikiData() {},
+
+  async getWikiPage(movieTitle: string) {
+    return await this.apiGet(
+      `prop=extracts&exchars=1000&explaintext&titles=${movieTitle}`
+    );
+  },
+
+  async getWikiPageLinks(movieTitle: string) {
+    return await this.apiGet(`&prop=extlinks&ellimit=max&titles=${movieTitle}`);
+  },
+
+  async getPageLinks() {},
+
+  async apiGet(endpoint: string) {
+    const data = await fetch(
+      `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&${endpoint}`
+    );
+    if (data.status === 200) {
+      console.log(data);
+      const result = await data.json();
+      console.log(result);
+      return result;
+    }
+    return null;
+  },
 };
