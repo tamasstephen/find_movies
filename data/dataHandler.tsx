@@ -29,8 +29,6 @@ export const dataHandler = {
     return null;
   },
 
-  async getWikiData() {},
-
   async getWikiPage(movieTitle: string) {
     return await this.apiGet(
       `prop=extracts&exchars=1000&explaintext&titles=${movieTitle}`
@@ -40,8 +38,6 @@ export const dataHandler = {
   async getWikiPageLinks(movieTitle: string) {
     return await this.apiGet(`&prop=extlinks&ellimit=max&titles=${movieTitle}`);
   },
-
-  async getPageLinks() {},
 
   async apiGet(endpoint: string) {
     const data = await fetch(
