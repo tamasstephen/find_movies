@@ -3,6 +3,8 @@ import { useState, SyntheticEvent } from "react";
 import Input from "../component/Input";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import { dataHandler } from "../data/dataHandler";
+import { Movie } from "../model/Movie";
 
 const Home: NextPage = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -12,9 +14,10 @@ const Home: NextPage = () => {
     setSearchValue(input.value);
   }
 
-  function handleSubmit(event: SyntheticEvent) {
+  async function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
-    console.log(event);
+    const data = await dataHandler.getMoviesByName(searchValue);
+    const movies: Movie[] = data.data.searchMovies;
   }
 
   return (
