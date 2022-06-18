@@ -44,9 +44,11 @@ const Home: NextPage = () => {
     preventBodyScroll();
     showSpinner();
     event.preventDefault();
-    const data = await dataHandler.getMoviesByName(searchValue);
-    const movies: Movie[] = data.data.searchMovies;
-    setSearchedMovies((): Movie[] => [...movies]);
+    if (searchValue.length > 1) {
+      const data = await dataHandler.getMoviesByName(searchValue);
+      const movies: Movie[] = data.data.searchMovies;
+      setSearchedMovies((): Movie[] => [...movies]);
+    }
     hideSpinner();
     allowBodyScroll();
   }
