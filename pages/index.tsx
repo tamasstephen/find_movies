@@ -49,6 +49,20 @@ const Home: NextPage = () => {
     allowBodyScroll();
   }
 
+  async function getRecommendedMovies(movieId: string) {
+    showSpinner();
+    try {
+      closeDetails();
+      const data = await dataHandler.getRecommendedMovies(parseInt(movieId));
+      const movies: Movie[] = data.data.movie.recommended;
+      setSearchedMovies((): Movie[] => [...movies]);
+    } catch (err) {
+      console.log(err);
+    }
+    allowBodyScroll();
+    hideSpinner();
+  }
+
   function preventBodyScroll() {
     setBodyHeight(styles.noScroll);
   }
@@ -58,6 +72,7 @@ const Home: NextPage = () => {
   }
 
   function showSpinner() {
+    window.scrollTo(0, 0);
     setSpinnerVisibility("");
   }
 
@@ -99,6 +114,7 @@ const Home: NextPage = () => {
         score={detailsContent.score}
         closeDetails={closeDetails}
         visibility={detailVisibility}
+        getRecommendedMovies={getRecommendedMovies}
       />
       <Spinner spinnerVisibility={spinnerVisibility} />
       <main className={styles.main}>

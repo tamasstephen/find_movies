@@ -29,6 +29,42 @@ export const dataHandler = {
     return null;
   },
 
+  async getRecommendedMovies(movieId: number) {
+    console.log(movieId);
+    const data = await fetch("https://tmdb.sandbox.zoosh.ie/dev/graphql", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: `
+                query getMovie($id: ID!) {
+                    movie(id: $id) {
+                    id
+                    name
+                    recommended{
+                      id
+                      name
+                      overview
+                      score
+                      releaseDate
+                      img: poster {
+                        url: custom(size: "w185_and_h278_bestv2")
+                    }
+                    }
+                  } 
+                  }
+            `,
+        variables: {
+          id: `${movieId}`,
+        },
+      }),
+    });
+    if (data.status === 200) {
+      console.log(data);
+      return data.json();
+    }
+    return null;
+  },
+
   async getWikiPage(movieTitle: string) {
     return await this.apiGet(
       `prop=extracts&exchars=1000&explaintext&titles=${movieTitle}`

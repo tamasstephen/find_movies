@@ -8,6 +8,7 @@ interface Props {
   score: number;
   visibility?: string;
   closeDetails: Function;
+  getRecommendedMovies: Function;
 }
 
 export interface DetailState {
@@ -24,6 +25,7 @@ const MovieDetail = ({
   score,
   closeDetails,
   visibility,
+  getRecommendedMovies,
 }: Props) => {
   const detailContent = info.content !== "" ? info.content : "Not Available!";
 
@@ -53,6 +55,9 @@ const MovieDetail = ({
                 <p>Wikipedia</p>
               </a>
             )}
+            <a onClick={() => getRecommendedMovies(info.id)}>
+              <p>Related movies</p>
+            </a>
           </div>
         </div>
       </div>
