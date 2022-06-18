@@ -1,13 +1,20 @@
 import React from "react";
 import styles from "../styles/components/MovieDetails.module.css";
 
-export interface Props {
+interface Props {
   info: { content: string; wikiLink: string; imdbLink: string; id: number };
   title: string;
   imgSrc: string;
   score: number;
   visibility?: string;
   closeDetails: Function;
+}
+
+export interface DetailState {
+  info: { content: string; wikiLink: string; imdbLink: string; id: number };
+  title: string;
+  imgSrc: string;
+  score: number;
 }
 
 const MovieDetail = ({
