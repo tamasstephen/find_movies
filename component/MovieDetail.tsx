@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styles from "../styles/components/MovieDetails.module.css";
 
-interface Props {
+export interface Props {
   info: { content: string; wikiLink: string; imdbLink: string };
   title: string;
   imgSrc: string;
   score: number;
-  visibility: string;
+  visibility?: string;
   closeDetails: Function;
 }
 

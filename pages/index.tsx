@@ -6,11 +6,11 @@ import styles from "../styles/Home.module.css";
 import { dataHandler } from "../data/dataHandler";
 import { Movie } from "../model/Movie";
 import MovieCard from "../component/MovieCard";
-import MovieDetail from "../component/MovieDetail";
+import MovieDetail, { Props as DetailProps } from "../component/MovieDetail";
 import Header from "../component/Header";
 
 const Home: NextPage = () => {
-  const defaultDetailState = {
+  const defaultDetailState: DetailProps = {
     info: { content: "", wikiLink: "", imdbLink: "" },
     title: "",
     imgSrc: "",
@@ -22,16 +22,9 @@ const Home: NextPage = () => {
   const [bodyScroll, setBodyHeight] = useState("");
   const [searchedMovies, setSearchedMovies]: [Movie[], Function] = useState([]);
   const [detailVisibility, setDetailVisibility] = useState("hideElement");
-  const [detailsContent, setDetailsContent]: [
-    {
-      info: { content: string; wikiLink: string; imdbLink: string };
-      title: string;
-      imgSrc: string;
-      score: number;
-      closeDetails: Function;
-    },
-    Function
-  ] = useState({ ...defaultDetailState });
+  const [detailsContent, setDetailsContent]: [DetailProps, Function] = useState(
+    { ...defaultDetailState }
+  );
 
   function closeDetails() {
     allowBodyScroll();
