@@ -43,8 +43,8 @@ h1 {
 }
 
 .gradientText {
+  background: -webkit-linear-gradient(to left, blue, purple, orange);
   background: linear-gradient(to left, blue, purple, orange);
-  background: -webkit-linear-gradient(to left, blue, purple, pink, orange);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
