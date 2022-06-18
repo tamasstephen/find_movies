@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "../styles/components/MovieDetails.module.css";
 
 export interface Props {
-  info: { content: string; wikiLink: string; imdbLink: string };
+  info: { content: string; wikiLink: string; imdbLink: string; id: number };
   title: string;
   imgSrc: string;
   score: number;

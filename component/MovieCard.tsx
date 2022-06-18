@@ -6,10 +6,11 @@ interface Props {
   imgUrl: string;
   overview: string;
   score: number;
+  movieId: number;
   fn: Function;
 }
 
-const MovieCard = ({ title, imgUrl, overview, score, fn }: Props) => {
+const MovieCard = ({ title, imgUrl, overview, score, fn, movieId }: Props) => {
   const imgSrc = imgUrl ? imgUrl : "/placeholder.png";
   return (
     <div className={styles.cardContainer}>
@@ -21,7 +22,7 @@ const MovieCard = ({ title, imgUrl, overview, score, fn }: Props) => {
         height={278}
       />
       <div className={styles.content}>
-        <a onClick={() => fn(title, score, imgSrc)}>
+        <a onClick={() => fn(title, score, imgSrc, movieId)}>
           <h3 className={styles.cardTitle}>{title}</h3>
         </a>
         <p className={styles.paragraph}>{overview}</p>
