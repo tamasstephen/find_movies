@@ -27,7 +27,7 @@ main {
 }
 
 .hideElement{
-  display: none;
+  display: none !important;
 }
 
 .showElement{

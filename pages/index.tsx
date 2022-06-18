@@ -8,6 +8,7 @@ import { Movie } from "../model/Movie";
 import MovieCard from "../component/MovieCard";
 import MovieDetail, { Props as DetailProps } from "../component/MovieDetail";
 import Header from "../component/Header";
+import Spinner from "../component/Spinner";
 
 const Home: NextPage = () => {
   const defaultDetailState: DetailProps = {
@@ -18,6 +19,7 @@ const Home: NextPage = () => {
     closeDetails: closeDetails,
   };
 
+  const [spinnerVisibility, setSpinnerVisibility] = useState("hideElement");
   const [searchValue, setSearchValue] = useState("");
   const [bodyScroll, setBodyHeight] = useState("");
   const [searchedMovies, setSearchedMovies]: [Movie[], Function] = useState([]);
@@ -39,10 +41,14 @@ const Home: NextPage = () => {
   }
 
   async function handleSubmit(event: SyntheticEvent) {
+    preventBodyScroll();
+    showSpinner();
     event.preventDefault();
     const data = await dataHandler.getMoviesByName(searchValue);
     const movies: Movie[] = data.data.searchMovies;
     setSearchedMovies((): Movie[] => [...movies]);
+    hideSpinner();
+    allowBodyScroll();
   }
 
   function preventBodyScroll() {
@@ -53,11 +59,21 @@ const Home: NextPage = () => {
     setBodyHeight("");
   }
 
+  function showSpinner() {
+    setSpinnerVisibility("");
+  }
+
+  function hideSpinner() {
+    setSpinnerVisibility("hideElement");
+  }
+
   async function showMovieDetails(
     movieTitle: string,
     score: number,
     imageSrc: string
   ) {
+    showSpinner();
+    preventBodyScroll();
     const result = { content: "", wikiLink: "", imdbLink: "" };
     const pageDetails = await dataHandler.getWikiPage(movieTitle);
     const movieId: string = Object.keys(pageDetails.query.pages)[0];
@@ -84,10 +100,10 @@ const Home: NextPage = () => {
       imgSrc: imageSrc,
       score: score,
     };
-    preventBodyScroll();
     setDetailsContent({ ...defaultDetailState });
     setDetailsContent(newContent);
     setDetailVisibility("");
+    hideSpinner();
   }
 
   return (
@@ -105,6 +121,7 @@ const Home: NextPage = () => {
         closeDetails={detailsContent.closeDetails}
         visibility={detailVisibility}
       />
+      <Spinner spinnerVisibility={spinnerVisibility} />
       <main className={styles.main}>
         <div className={styles.upper}>
           <div className={styles.container}>
