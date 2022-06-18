@@ -5,3 +5,60 @@
   position: absolute;
 }
 
+.title {
+  margin: 0;
+  padding: 1.5rem 0;
+  width: 100%;
+}
+
+.detailImage {
+  border-radius: 8px;
+}
+
+.wrapper{
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
+}
+
+.paragraph{
+  line-height: 150%;
+  margin: 0;
+}
+
+.close {
+  display: flex;
+  justify-content: flex-end
+  }
+
+.closeLink{
+  font-weight: bold;
+}
+
+.rating {
+  font-weight: bold;
+  color: #777696;
+}
+
+.links {
+  display: flex;
+  gap: 1rem;
+}
+
+.extra {
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    width: 600px;
+  }
+  
+}
+
+

@@ -22,24 +22,32 @@ const MovieDetail = ({
 
   return (
     <div className={`${styles.details} ${visibility}`}>
-      <a onClick={() => closeDetails()}>
-        <p>Close</p>
-      </a>
-      <img src={imgSrc} alt={title} />
-      <h2>{title}</h2>
-      <p>{detailContent}</p>
-      <p>Rating: {score}</p>
-      <div>
-        {info.imdbLink !== "" && (
-          <a href={info.imdbLink} target="_blank" rel="noreferrer">
-            <p>Imdb</p>
-          </a>
-        )}
-        {info.wikiLink !== "" && (
-          <a href={info.wikiLink} target="_blank" rel="noreferrer">
-            <p>Wikipedia</p>
-          </a>
-        )}
+      <div className={styles.wrapper}>
+        <div className={styles.container}>
+          <div className={styles.close}>
+            <a onClick={() => closeDetails()}>
+              <p className={styles.closeLink}>Close</p>
+            </a>
+          </div>
+          <img className={styles.detailImage} src={imgSrc} alt={title} />
+          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.paragraph}>{detailContent}</p>
+          <div className={styles.extra}>
+            <p className={styles.rating}>Rating: {score}</p>
+          </div>
+          <div className={`${styles.extra} ${styles.links}`}>
+            {info.imdbLink !== "" && (
+              <a href={info.imdbLink} target="_blank" rel="noreferrer">
+                <p>Imdb</p>
+              </a>
+            )}
+            {info.wikiLink !== "" && (
+              <a href={info.wikiLink} target="_blank" rel="noreferrer">
+                <p>Wikipedia</p>
+              </a>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

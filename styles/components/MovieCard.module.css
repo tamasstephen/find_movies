@@ -4,7 +4,7 @@
     border: 1px solid #d2d2d2;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 0 .25rem 1px rgba(0, 0, 0, .15);
+    box-shadow: 0 0 .5rem 2px rgba(255, 204, 153, .325);
 }
 
 .content{
