@@ -10,7 +10,7 @@ const Header = ({ firstLine, secondLine, colourText }: Props) => {
       {firstLine}
       <br />
       {secondLine}
-      <span className="gradientText"> {colourText}</span>
+      <span className="gradientText">{colourText}</span>
     </h1>
   );
 };
