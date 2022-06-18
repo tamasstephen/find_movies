@@ -10,7 +10,7 @@ interface Props {
 }
 
 const MovieCard = ({ title, imgUrl, overview, score, fn }: Props) => {
-  const imgSrc = imgUrl ? imgUrl : "/vercel.svg";
+  const imgSrc = imgUrl ? imgUrl : "/placeholder.png";
   return (
     <div className={styles.cardContainer}>
       <img
