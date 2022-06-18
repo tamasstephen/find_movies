@@ -22,6 +22,10 @@ a:hover{
   box-sizing: border-box;
 }
 
+main {
+  padding-bottom: 8rem;
+}
+
 .hideElement{
   display: none;
 }
@@ -54,7 +58,7 @@ form {
   gap: .725rem;
 }
 
-button[type="submit"]{
+button{
   border-radius: 25px;
   border: none;
   font-size: 1.125rem;
@@ -63,7 +67,13 @@ button[type="submit"]{
   padding: 0 .625rem;
   color: white;
   background-color: rgb(20, 57, 219);
-  box-shadow: 0 .15rem .5rem .2rem rgba(135, 206, 250, .4);
+  box-shadow: .2rem .2rem .9rem .5rem rgba(135, 206, 250, .6);
+  cursor: pointer;
+  transition: all .2s;
+}
+
+button:hover {
+  background-color: rgb(18, 41, 146);
 }
 
 img {

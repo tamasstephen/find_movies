@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "../styles/components/MovieCard.module.css";
 
 interface Props {
   title: string;
@@ -11,13 +12,19 @@ interface Props {
 const MovieCard = ({ title, imgUrl, overview, score, fn }: Props) => {
   const imgSrc = imgUrl ? imgUrl : "/vercel.svg";
   return (
-    <div>
-      <img src={imgSrc} alt={title} width={185} height={278} />
-      <div>
+    <div className={styles.cardContainer}>
+      <img
+        className={styles.cardImg}
+        src={imgSrc}
+        alt={title}
+        width={185}
+        height={278}
+      />
+      <div className={styles.content}>
         <a onClick={() => fn(title, score, imgSrc)}>
-          <h3>{title}</h3>
+          <h3 className={styles.cardTitle}>{title}</h3>
         </a>
-        <p>{overview}</p>
+        <p className={styles.paragraph}>{overview}</p>
         <p>
           Rating: <span>{score}</span>
         </p>

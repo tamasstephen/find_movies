@@ -1,0 +1,43 @@
+.cardContainer{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #d2d2d2;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.content{
+    padding: 2rem 1rem;
+}
+
+.paragraph {
+    line-height: 150%;
+    margin: 0;
+}
+
+.cardImg {
+    max-height: 20rem;
+    width: 100%;
+    overflow: hidden;
+    object-fit: cover;
+    object-position: 50% 50%;
+    aspect-ratio: 1/1
+
+}
+
+.cardTitle {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+}
+
+@media screen and (min-width: 768px) {
+    .cardContainer {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+    }
+
+    .cardImg{
+        max-height:none;
+        height: 100%;
+    }
+}

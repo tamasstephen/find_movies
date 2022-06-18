@@ -47,9 +47,13 @@
 }
 
 @media screen and (min-width: 1024px){
-  .container,
-  .cardContainer {
+  .container
+  {
     max-width: 600px;
+  }
+
+  .cardContainer{
+    max-width: 800px;
   }
 
   .containerWrapper {
