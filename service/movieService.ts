@@ -1,4 +1,4 @@
-import { Props as DetailProps } from "../component/MovieDetail";
+import { DetailState as DetailProps } from "../component/MovieDetail";
 import { dataHandler } from "../data/dataHandler";
 
 export const movieService = {
@@ -35,5 +35,15 @@ export const movieService = {
       imgSrc: imageSrc,
       score: score,
     };
+  },
+
+  getMovieDetailsDefaultState(): DetailProps {
+    const defaultDetailState: DetailProps = {
+      info: { content: "", wikiLink: "", imdbLink: "", id: 0 },
+      title: "",
+      imgSrc: "",
+      score: 0,
+    };
+    return Object.create(defaultDetailState);
   },
 };

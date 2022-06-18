@@ -6,30 +6,25 @@ import styles from "../styles/Home.module.css";
 import { dataHandler } from "../data/dataHandler";
 import { Movie } from "../model/Movie";
 import MovieCard from "../component/MovieCard";
-import MovieDetail, { Props as DetailProps } from "../component/MovieDetail";
+import MovieDetail, {
+  DetailState as DetailProps,
+} from "../component/MovieDetail";
 import Header from "../component/Header";
 import Spinner from "../component/Spinner";
 import { movieService } from "../service/movieService";
 
 const Home: NextPage = () => {
-  const defaultDetailState: DetailProps = {
-    info: { content: "", wikiLink: "", imdbLink: "", id: 0 },
-    title: "",
-    imgSrc: "",
-    score: 0,
-    closeDetails: closeDetails,
-  };
-
   const [spinnerVisibility, setSpinnerVisibility] = useState("hideElement");
   const [searchValue, setSearchValue] = useState("");
   const [bodyScroll, setBodyHeight] = useState("");
   const [searchedMovies, setSearchedMovies]: [Movie[], Function] = useState([]);
   const [detailVisibility, setDetailVisibility] = useState("hideElement");
   const [detailsContent, setDetailsContent]: [DetailProps, Function] = useState(
-    { ...defaultDetailState }
+    movieService.getMovieDetailsDefaultState()
   );
 
   function closeDetails() {
+    setDetailsContent(movieService.getMovieDetailsDefaultState());
     allowBodyScroll();
     setDetailVisibility(() => {
       return "hideElement";
@@ -85,8 +80,6 @@ const Home: NextPage = () => {
       tmdbMovieId,
       detailsContent
     );
-    console.log(newContent);
-    setDetailsContent({ ...defaultDetailState });
     setDetailsContent(newContent);
     setDetailVisibility("");
     hideSpinner();
@@ -104,7 +97,7 @@ const Home: NextPage = () => {
         title={detailsContent.title}
         imgSrc={detailsContent.imgSrc}
         score={detailsContent.score}
-        closeDetails={detailsContent.closeDetails}
+        closeDetails={closeDetails}
         visibility={detailVisibility}
       />
       <Spinner spinnerVisibility={spinnerVisibility} />
