@@ -25,7 +25,7 @@ const MovieCard = ({ title, imgUrl, overview, score, fn }: Props) => {
           <h3 className={styles.cardTitle}>{title}</h3>
         </a>
         <p className={styles.paragraph}>{overview}</p>
-        <p>
+        <p className={styles.rating}>
           Rating: <span>{score}</span>
         </p>
       </div>
