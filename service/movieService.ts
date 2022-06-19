@@ -50,7 +50,9 @@ export const movieService = {
     return Object.create(defaultDetailState);
   },
 
-  async getOptionalWikiPagesByMovieTitle(movieTitle: string) {
+  async getOptionalWikiPagesByMovieTitle(
+    movieTitle: string
+  ): Promise<{ title: string }> {
     const optionalPages = await dataHandler.getWikiPagesByName(movieTitle);
     console.log(optionalPages);
     if (optionalPages.query.prefixsearch.length < 1) {
@@ -66,7 +68,7 @@ export const movieService = {
   async findRightMovie(
     movieTitle: string,
     movies: { ns: number; title: string; pageid: number }[]
-  ): Promise<{ ns: number; title: string; pageid: number } | null> {
+  ): Promise<{ ns: number; title: string; pageid: number }> {
     const escapedTitle = util.escapeTitle(movieTitle);
     for (const movie of movies) {
       const escapedListTitle = util
