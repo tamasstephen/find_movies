@@ -22,6 +22,7 @@ const Input = ({ value, setValue, label, name }: Props) => {
         name={name}
         placeholder={label}
         onChange={(event) => setValue(event)}
+        required
       />
     </div>
   );

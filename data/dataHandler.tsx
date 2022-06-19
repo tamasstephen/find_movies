@@ -29,6 +29,41 @@ export const dataHandler = {
     return null;
   },
 
+  async getRecommendedMovies(movieId: number) {
+    console.log(movieId);
+    const data = await fetch("https://tmdb.sandbox.zoosh.ie/dev/graphql", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: `
+                query getMovie($id: ID!) {
+                    movie(id: $id) {
+                    id
+                    name
+                    recommended{
+                      id
+                      name
+                      overview
+                      score
+                      releaseDate
+                      img: poster {
+                        url: custom(size: "w185_and_h278_bestv2")
+                    }
+                    }
+                  } 
+                  }
+            `,
+        variables: {
+          id: `${movieId}`,
+        },
+      }),
+    });
+    if (data.status === 200) {
+      return data.json();
+    }
+    return null;
+  },
+
   async getWikiPage(movieTitle: string) {
     return await this.apiGet(
       `prop=extracts&exchars=1000&explaintext&titles=${movieTitle}`
@@ -37,6 +72,26 @@ export const dataHandler = {
 
   async getWikiPageLinks(movieTitle: string) {
     return await this.apiGet(`&prop=extlinks&ellimit=max&titles=${movieTitle}`);
+  },
+
+  async getWikiPagesByName(movieTitle: string) {
+    const data = await fetch(
+      `https://en.wikipedia.org/w/api.php?action=query&list=prefixsearch&pssearch=${movieTitle}&pslimit=max&origin=*&format=json`
+    );
+    if (data.status === 200) {
+      return await data.json();
+    }
+    return null;
+  },
+
+  async getCategoriesForMovie(pageId: number) {
+    const data = await fetch(
+      `https://en.wikipedia.org/w/api.php?action=query&pageids=${pageId}&prop=categories&pslimit=max&origin=*&format=json`
+    );
+    if (data.status === 200) {
+      return await data.json();
+    }
+    return null;
   },
 
   async apiGet(endpoint: string) {
