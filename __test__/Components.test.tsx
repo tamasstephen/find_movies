@@ -6,172 +6,180 @@ import Input from "../component/Input";
 import MovieCard from "../component/MovieCard";
 import MovieDetail from "../component/MovieDetail";
 
-test("header should be visible", () => {
-  render(<Header firstLine="Test" secondLine="test" colourText="third" />);
-  const myNode = document.querySelector("h1");
 
-  expect(myNode).toBeVisible();
-});
+describe("Single component validation", () => {
+  test("header should be visible", () => {
+    render(<Header firstLine="Test" secondLine="test" colourText="third" />);
+    const myNode = document.querySelector("h1");
 
-test("form should fire handleSubmit fnc", () => {
-  const dummySubmit = jest.fn();
-  const dummyInputChangeHandler = jest.fn();
-  const { getByRole } = render(
-    <Form handleSubmit={dummySubmit}>
+    expect(myNode).toBeVisible();
+  });
+
+  test("form should fire handleSubmit fnc", () => {
+    const dummySubmit = jest.fn();
+    const dummyInputChangeHandler = jest.fn();
+    const { getByRole } = render(
+      <Form handleSubmit={dummySubmit}>
+        <Input
+          value={"testValue"}
+          setValue={dummyInputChangeHandler}
+          label={"Find a movie..."}
+          name="text"
+        />
+        <button type="submit">Find Movie</button>
+      </Form>
+    );
+
+    fireEvent.submit(getByRole("form"));
+
+    expect(dummySubmit).toHaveBeenCalledTimes(1);
+  });
+
+  test("input should fire state changer fnc", () => {
+    const argText = "Find a movie...";
+    const dummyInputChangeHandler = jest.fn();
+
+    const { getByPlaceholderText } = render(
       <Input
         value={"testValue"}
         setValue={dummyInputChangeHandler}
-        label={"Find a movie..."}
+        label={argText}
         name="text"
       />
-      <button type="submit">Find Movie</button>
-    </Form>
-  );
+    );
 
-  fireEvent.submit(getByRole("form"));
+    const input = getByPlaceholderText(argText);
 
-  expect(dummySubmit).toHaveBeenCalledTimes(1);
-});
+    fireEvent.change(input, { target: { value: "hey" } });
 
-test("input should fire state changer fnc", () => {
-  const argText = "Find a movie...";
-  const dummyInputChangeHandler = jest.fn();
+    expect(dummyInputChangeHandler).toBeCalled();
+  });
 
-  const { getByPlaceholderText } = render(
-    <Input
-      value={"testValue"}
-      setValue={dummyInputChangeHandler}
-      label={argText}
-      name="text"
-    />
-  );
+  test("moviecard title fires the detail open fnc", () => {
+    const showDetails = jest.fn();
+    const testTitle = "Test";
+    const { getByText } = render(
+      <MovieCard
+        title={testTitle}
+        imgUrl={"test"}
+        overview={"test"}
+        score={10}
+        key={1}
+        movieId={1}
+        fn={showDetails}
+      />
+    );
+    const myLink = getByText(testTitle);
 
-  const input = getByPlaceholderText(argText);
+    fireEvent.click(myLink);
 
-  fireEvent.change(input, { target: { value: "hey" } });
+    expect(showDetails).toBeCalled();
+  });
 
-  expect(dummyInputChangeHandler).toBeCalled();
-});
+  test("movie details screen should call close fnc", () => {
+    const closeDetails = jest.fn();
+    const getRecommendedMovies = jest.fn();
+    const testValue = "placeholder";
+    const testObj = { content: "", wikiLink: "", imdbLink: "", id: 0 };
+    const { getByText } = render(
+      <MovieDetail
+        info={testObj}
+        title={testValue}
+        imgSrc={testValue}
+        score={0}
+        closeDetails={closeDetails}
+        visibility={testValue}
+        getRecommendedMovies={getRecommendedMovies}
+      />
+    );
 
-test("moviecard title fires the detail open fnc", () => {
-  const showDetails = jest.fn();
-  const testTitle = "Test";
-  const { getByText } = render(
-    <MovieCard
-      title={testTitle}
-      imgUrl={"test"}
-      overview={"test"}
-      score={10}
-      key={1}
-      movieId={1}
-      fn={showDetails}
-    />
-  );
-  const myLink = getByText(testTitle);
+    const close = getByText("Close");
 
-  fireEvent.click(myLink);
+    fireEvent.click(close);
 
-  expect(showDetails).toBeCalled();
-});
+    expect(closeDetails).toBeCalled();
+  });
 
-test("movie details screen should call close fnc", () => {
-  const closeDetails = jest.fn();
-  const getRecommendedMovies = jest.fn();
-  const testValue = "placeholder";
-  const testObj = { content: "", wikiLink: "", imdbLink: "", id: 0 };
-  const { getByText } = render(
-    <MovieDetail
-      info={testObj}
-      title={testValue}
-      imgSrc={testValue}
-      score={0}
-      closeDetails={closeDetails}
-      visibility={testValue}
-      getRecommendedMovies={getRecommendedMovies}
-    />
-  );
+  test("movie Details imdb link should be visible", () => {
+    const closeDetails = jest.fn();
+    const getRecommendedMovies = jest.fn();
+    const testValue = "placeholder";
+    const testObj = {
+      content: "myContent",
+      wikiLink: "",
+      imdbLink: "hey",
+      id: 0,
+    };
+    const { getByText } = render(
+      <MovieDetail
+        info={testObj}
+        title={testValue}
+        imgSrc={testValue}
+        score={0}
+        closeDetails={closeDetails}
+        visibility={testValue}
+        getRecommendedMovies={getRecommendedMovies}
+      />
+    );
 
-  const close = getByText("Close");
+    const imdb = getByText("Imdb");
 
-  fireEvent.click(close);
+    expect(imdb).toBeVisible();
+  });
 
-  expect(closeDetails).toBeCalled();
-});
+  test("movie Details wiki link should be visible", () => {
+    const closeDetails = jest.fn();
+    const getRecommendedMovies = jest.fn();
+    const testValue = "placeholder";
+    const testObj = {
+      content: "myContent",
+      wikiLink: "hey",
+      imdbLink: "",
+      id: 0,
+    };
+    const { getByText } = render(
+      <MovieDetail
+        info={testObj}
+        title={testValue}
+        imgSrc={testValue}
+        score={0}
+        closeDetails={closeDetails}
+        visibility={testValue}
+        getRecommendedMovies={getRecommendedMovies}
+      />
+    );
 
-test("movie Details imdb link should be visible", () => {
-  const closeDetails = jest.fn();
-  const getRecommendedMovies = jest.fn();
-  const testValue = "placeholder";
-  const testObj = {
-    content: "myContent",
-    wikiLink: "",
-    imdbLink: "hey",
-    id: 0,
-  };
-  const { getByText } = render(
-    <MovieDetail
-      info={testObj}
-      title={testValue}
-      imgSrc={testValue}
-      score={0}
-      closeDetails={closeDetails}
-      visibility={testValue}
-      getRecommendedMovies={getRecommendedMovies}
-    />
-  );
+    const wiki = getByText("Wikipedia");
 
-  const imdb = getByText("Imdb");
+    expect(wiki).toBeVisible();
+  });
 
-  expect(imdb).toBeVisible();
-});
+  test("movie Details should trigger recommended movie fetch", () => {
+    const closeDetails = jest.fn();
+    const getRecommendedMovies = jest.fn();
+    const testValue = "placeholder";
+    const testObj = {
+      content: "myContent",
+      wikiLink: "",
+      imdbLink: "ho",
+      id: 0,
+    };
+    const { getByText } = render(
+      <MovieDetail
+        info={testObj}
+        title={testValue}
+        imgSrc={testValue}
+        score={0}
+        closeDetails={closeDetails}
+        visibility={testValue}
+        getRecommendedMovies={getRecommendedMovies}
+      />
+    );
 
-test("movie Details wiki link should be visible", () => {
-  const closeDetails = jest.fn();
-  const getRecommendedMovies = jest.fn();
-  const testValue = "placeholder";
-  const testObj = {
-    content: "myContent",
-    wikiLink: "hey",
-    imdbLink: "",
-    id: 0,
-  };
-  const { getByText } = render(
-    <MovieDetail
-      info={testObj}
-      title={testValue}
-      imgSrc={testValue}
-      score={0}
-      closeDetails={closeDetails}
-      visibility={testValue}
-      getRecommendedMovies={getRecommendedMovies}
-    />
-  );
+    const myLink = getByText("Related movies");
 
-  const wiki = getByText("Wikipedia");
+    fireEvent.click(myLink);
 
-  expect(wiki).toBeVisible();
-});
-
-test("movie Details should trigger recommended movie fetch", () => {
-  const closeDetails = jest.fn();
-  const getRecommendedMovies = jest.fn();
-  const testValue = "placeholder";
-  const testObj = { content: "myContent", wikiLink: "", imdbLink: "ho", id: 0 };
-  const { getByText } = render(
-    <MovieDetail
-      info={testObj}
-      title={testValue}
-      imgSrc={testValue}
-      score={0}
-      closeDetails={closeDetails}
-      visibility={testValue}
-      getRecommendedMovies={getRecommendedMovies}
-    />
-  );
-
-  const myLink = getByText("Related movies");
-
-  fireEvent.click(myLink);
-
-  expect(getRecommendedMovies).toBeCalled();
+    expect(getRecommendedMovies).toBeCalled();
+  });
 });
