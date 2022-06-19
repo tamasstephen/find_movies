@@ -7,7 +7,7 @@ interface Props {
 
 const Form = ({ children, handleSubmit }: Props) => {
   return (
-    <form onSubmit={(event: SyntheticEvent) => handleSubmit(event)}>
+    <form role="form" onSubmit={(event: SyntheticEvent) => handleSubmit(event)}>
       {children}
     </form>
   );
