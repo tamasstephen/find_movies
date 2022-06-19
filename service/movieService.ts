@@ -2,6 +2,10 @@ import { DetailState as DetailProps } from "../component/MovieDetail";
 import { dataHandler } from "../data/dataHandler";
 import { util } from "../utils/util";
 
+interface imdbMovieList {
+  results: { id: string; image: string; title: string }[];
+}
+
 export const movieService = {
   async getMovieDetailsData(
     movieTitle: string,
@@ -20,15 +24,23 @@ export const movieService = {
         result.content = pageDetails.query.pages[movieId].extract;
       }
       result.wikiLink = `https://en.wikipedia.org/wiki/${wikiTitle}`;
-      const pageLinks = await dataHandler.getWikiPageLinks(wikiTitle);
-      const allLinks = pageLinks.query.pages[movieId].extlinks;
-      if (pageLinks.query.pages[movieId].hasOwnProperty("extlinks")) {
-        const myLinkObj = allLinks.find((current: Object) =>
-          Object.values(current)[0].includes("imdb.com/title")
-        );
-        if (myLinkObj) {
-          result.imdbLink = Object.values(myLinkObj)[0] as string;
+      const imdbLinkEndpoint: imdbMovieList = await dataHandler.getImdbMovies(
+        movieTitle
+      );
+      if (imdbLinkEndpoint.results === null) {
+        //TODO: refactor
+        const pageLinks = await dataHandler.getWikiPageLinks(wikiTitle);
+        const allLinks = pageLinks.query.pages[movieId].extlinks;
+        if (pageLinks.query.pages[movieId].hasOwnProperty("extlinks")) {
+          const myLinkObj = allLinks.find((current: Object) =>
+            Object.values(current)[0].includes("imdb.com/title")
+          );
+          if (myLinkObj) {
+            result.imdbLink = Object.values(myLinkObj)[0] as string;
+          }
         }
+      } else {
+        result.imdbLink = `https://www.imdb.com/title/${imdbLinkEndpoint.results[0].id}/`;
       }
     }
     return {
@@ -54,7 +66,6 @@ export const movieService = {
     movieTitle: string
   ): Promise<{ title: string }> {
     const optionalPages = await dataHandler.getWikiPagesByName(movieTitle);
-    console.log(optionalPages);
     if (optionalPages.query.prefixsearch.length < 1) {
       return { title: movieTitle };
     }
@@ -87,7 +98,6 @@ export const movieService = {
               category.title.includes("film")
             );
           if (isFilm) {
-            console.log(movie);
             return movie;
           }
         } else {
