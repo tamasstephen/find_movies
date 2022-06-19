@@ -6,6 +6,13 @@ interface imdbMovieList {
   results: { id: string; image: string; title: string }[];
 }
 
+interface Result {
+  content: string;
+  wikiLink: string;
+  imdbLink: string;
+  id: number;
+}
+
 export const movieService = {
   async getMovieDetailsData(
     movieTitle: string,
@@ -15,33 +22,29 @@ export const movieService = {
     detailsContent: DetailProps
   ): Promise<DetailProps> {
     const mov = await this.getOptionalWikiPagesByMovieTitle(movieTitle);
-    const result = { content: "", wikiLink: "", imdbLink: "", id: tmdbMovieId };
+    const result: Result = {
+      content: "",
+      wikiLink: "",
+      imdbLink: "",
+      id: tmdbMovieId,
+    };
+    const imdbLinkEndpoint: imdbMovieList = await dataHandler.getImdbMovies(
+      movieTitle
+    );
     const wikiTitle = mov.title !== undefined ? mov.title : movieTitle;
     const pageDetails = await dataHandler.getWikiPage(wikiTitle);
     const movieId: string = Object.keys(pageDetails.query.pages)[0];
-    if (movieId !== "-1") {
+    const hasWikiPage = movieId !== "-1";
+    if (hasWikiPage) {
       if (pageDetails.query.pages[movieId].hasOwnProperty("extract")) {
         result.content = pageDetails.query.pages[movieId].extract;
       }
       result.wikiLink = `https://en.wikipedia.org/wiki/${wikiTitle}`;
-      const imdbLinkEndpoint: imdbMovieList = await dataHandler.getImdbMovies(
-        movieTitle
-      );
-      if (imdbLinkEndpoint.results === null) {
-        //TODO: refactor
-        const pageLinks = await dataHandler.getWikiPageLinks(wikiTitle);
-        const allLinks = pageLinks.query.pages[movieId].extlinks;
-        if (pageLinks.query.pages[movieId].hasOwnProperty("extlinks")) {
-          const myLinkObj = allLinks.find((current: Object) =>
-            Object.values(current)[0].includes("imdb.com/title")
-          );
-          if (myLinkObj) {
-            result.imdbLink = Object.values(myLinkObj)[0] as string;
-          }
-        }
-      } else {
-        result.imdbLink = `https://www.imdb.com/title/${imdbLinkEndpoint.results[0].id}/`;
-      }
+    }
+    if (imdbLinkEndpoint.results !== null) {
+      result.imdbLink = `https://www.imdb.com/title/${imdbLinkEndpoint.results[0].id}/`;
+    } else if (hasWikiPage) {
+      await this.getFallBackImdbLink(wikiTitle, result, movieId);
     }
     return {
       ...detailsContent,
@@ -106,5 +109,22 @@ export const movieService = {
       }
     }
     return movies[0];
+  },
+
+  async getFallBackImdbLink(
+    wikiTitle: string,
+    result: Result,
+    movieId: string
+  ) {
+    const pageLinks = await dataHandler.getWikiPageLinks(wikiTitle);
+    const allLinks = pageLinks.query.pages[movieId].extlinks;
+    if (pageLinks.query.pages[movieId].hasOwnProperty("extlinks")) {
+      const myLinkObj = allLinks.find((current: Object) =>
+        Object.values(current)[0].includes("imdb.com/title")
+      );
+      if (myLinkObj) {
+        result.imdbLink = Object.values(myLinkObj)[0] as string;
+      }
+    }
   },
 };
