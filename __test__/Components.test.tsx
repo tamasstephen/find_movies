@@ -4,6 +4,7 @@ import Header from "../component/Header";
 import Form from "../component/Form";
 import Input from "../component/Input";
 import MovieCard from "../component/MovieCard";
+import MovieDetail from "../component/MovieDetail";
 
 test("header should be visible", () => {
   render(<Header firstLine="Test" secondLine="test" colourText="third" />);
@@ -71,4 +72,52 @@ test("moviecard title fires the detail open fnc", () => {
   fireEvent.click(myLink);
 
   expect(showDetails).toBeCalled();
+});
+
+test("movie details screen should call close fnc", () => {
+  const closeDetails = jest.fn();
+  const getRecommendedMovies = jest.fn();
+  const testValue = "placeholder";
+  const testObj = { content: "", wikiLink: "", imdbLink: "", id: 0 };
+  const { getByText } = render(
+    <MovieDetail
+      info={testObj}
+      title={testValue}
+      imgSrc={testValue}
+      score={0}
+      closeDetails={closeDetails}
+      visibility={testValue}
+      getRecommendedMovies={getRecommendedMovies}
+    />
+  );
+
+  const close = getByText("Close");
+
+  fireEvent.click(close);
+
+  expect(closeDetails).toBeCalled();
+});
+
+test("movie Details should trigger recommended movie fetch", () => {
+  const closeDetails = jest.fn();
+  const getRecommendedMovies = jest.fn();
+  const testValue = "placeholder";
+  const testObj = { content: "myContent", wikiLink: "", imdbLink: "ho", id: 0 };
+  const { getByText } = render(
+    <MovieDetail
+      info={testObj}
+      title={testValue}
+      imgSrc={testValue}
+      score={0}
+      closeDetails={closeDetails}
+      visibility={testValue}
+      getRecommendedMovies={getRecommendedMovies}
+    />
+  );
+
+  const myLink = getByText("Related movies");
+
+  fireEvent.click(myLink);
+
+  expect(getRecommendedMovies).toBeCalled();
 });
