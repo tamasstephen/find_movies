@@ -30,7 +30,10 @@ const MovieDetail = ({
   const detailContent = info.content !== "" ? info.content : "Not Available!";
 
   return (
-    <div className={`${styles.details} ${visibility}`}>
+    <div
+      className={`${styles.details} ${visibility}`}
+      data-testid="movie-details"
+    >
       <div className={styles.wrapper}>
         <div className={styles.container}>
           <div className={styles.close}>
