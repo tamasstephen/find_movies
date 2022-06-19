@@ -27,3 +27,22 @@ test("form should fire handleSubmit fnc", () => {
   fireEvent.submit(getByRole("form"));
   expect(dummySubmit).toHaveBeenCalledTimes(1);
 });
+
+test("input should fire state changer fnc", () => {
+  const argText = "Find a movie...";
+  const dummyInputChangeHandler = jest.fn();
+
+  const { getByPlaceholderText } = render(
+    <Input
+      value={"testValue"}
+      setValue={dummyInputChangeHandler}
+      label={argText}
+      name="text"
+    />
+  );
+
+  const input = getByPlaceholderText(argText);
+  console.log(input);
+  fireEvent.change(input, { target: { value: "hey" } });
+  expect(dummyInputChangeHandler).toBeCalled();
+});
