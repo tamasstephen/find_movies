@@ -33,6 +33,10 @@
     color:#1c456e ;
 }
 
+.cardTitle > a {
+    color:#1c456e ;
+}
+
 .cardTitle:hover{
     color: orange;
 }
