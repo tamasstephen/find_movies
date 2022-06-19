@@ -74,6 +74,26 @@ export const dataHandler = {
     return await this.apiGet(`&prop=extlinks&ellimit=max&titles=${movieTitle}`);
   },
 
+  async getWikiPagesByName(movieTitle: string) {
+    const data = await fetch(
+      `https://en.wikipedia.org/w/api.php?action=query&list=prefixsearch&pssearch=${movieTitle}&pslimit=max&origin=*&format=json`
+    );
+    if (data.status === 200) {
+      return await data.json();
+    }
+    return null;
+  },
+
+  async getCategoriesForMovie(pageId: number) {
+    const data = await fetch(
+      `https://en.wikipedia.org/w/api.php?action=query&pageids=${pageId}&prop=categories&pslimit=max&origin=*&format=json`
+    );
+    if (data.status === 200) {
+      return await data.json();
+    }
+    return null;
+  },
+
   async apiGet(endpoint: string) {
     const data = await fetch(
       `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&${endpoint}`
