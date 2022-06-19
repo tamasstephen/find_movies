@@ -12,6 +12,7 @@ import MovieDetail, {
 import Header from "../component/Header";
 import Spinner from "../component/Spinner";
 import { movieService } from "../service/movieService";
+import Form from "../component/Form";
 
 const Home: NextPage = () => {
   const [spinnerVisibility, setSpinnerVisibility] = useState("hideElement");
@@ -125,7 +126,7 @@ const Home: NextPage = () => {
               secondLine="favourite"
               colourText=" movies"
             />
-            <form onSubmit={(event) => handleSubmit(event)}>
+            <Form handleSubmit={handleSubmit}>
               <Input
                 value={searchValue}
                 setValue={handleInputChange}
@@ -133,7 +134,7 @@ const Home: NextPage = () => {
                 name="text"
               />
               <button type="submit">Find Movie</button>
-            </form>
+            </Form>
           </div>
         </div>
         <div className={styles.containerWrapper}>
