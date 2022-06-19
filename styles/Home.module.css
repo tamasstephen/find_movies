@@ -7,7 +7,7 @@
 }
 
 .upper {
-  background-image: linear-gradient(to top, #fff 0%, #fdfcfb 5%,  #FEFEF1 30%, #FEF7C0 80%, #FEF3B3 100%);
+  background-image: linear-gradient(to top, #FEFEF1 30%, #FEF7C0 80%, #FEF3B3 100%);
   display: flex;
   flex-direction: column;
   align-items: center;

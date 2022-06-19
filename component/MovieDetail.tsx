@@ -30,13 +30,16 @@ const MovieDetail = ({
   const detailContent = info.content !== "" ? info.content : "Not Available!";
 
   return (
-    <div className={`${styles.details} ${visibility}`}>
+    <div
+      className={`${styles.details} ${visibility}`}
+      data-testid="movie-details"
+    >
       <div className={styles.wrapper}>
         <div className={styles.container}>
           <div className={styles.close}>
-            <a onClick={() => closeDetails()}>
-              <p className={styles.closeLink}>Close</p>
-            </a>
+            <p className={styles.closeLink}>
+              <a onClick={() => closeDetails()}>Close</a>
+            </p>
           </div>
           <img className={styles.detailImage} src={imgSrc} alt={title} />
           <h2 className={styles.title}>{title}</h2>
@@ -46,18 +49,25 @@ const MovieDetail = ({
           </div>
           <div className={`${styles.extra} ${styles.links}`}>
             {info.imdbLink !== "" && (
-              <a href={info.imdbLink} target="_blank" rel="noreferrer">
-                <p>Imdb</p>
-              </a>
+              <p>
+                <a href={info.imdbLink} target="_blank" rel="noreferrer">
+                  Imdb
+                </a>
+              </p>
             )}
             {info.wikiLink !== "" && (
-              <a href={info.wikiLink} target="_blank" rel="noreferrer">
-                <p>Wikipedia</p>
-              </a>
+              <p>
+                <a href={info.wikiLink} target="_blank" rel="noreferrer">
+                  Wikipedia
+                </a>
+              </p>
             )}
-            <a onClick={() => getRecommendedMovies(info.id)}>
-              <p>Related movies</p>
-            </a>
+
+            <p>
+              <a onClick={() => getRecommendedMovies(info.id)}>
+                Related movies
+              </a>
+            </p>
           </div>
         </div>
       </div>

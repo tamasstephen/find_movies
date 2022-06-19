@@ -22,9 +22,9 @@ const MovieCard = ({ title, imgUrl, overview, score, fn, movieId }: Props) => {
         height={278}
       />
       <div className={styles.content}>
-        <a onClick={() => fn(title, score, imgSrc, movieId)}>
-          <h3 className={styles.cardTitle}>{title}</h3>
-        </a>
+        <h3 className={styles.cardTitle}>
+          <a onClick={() => fn(title, score, imgSrc, movieId)}> {title}</a>
+        </h3>
         <p className={styles.paragraph}>{overview}</p>
         <p className={styles.rating}>
           Rating: <span>{score}</span>
