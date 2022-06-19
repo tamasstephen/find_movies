@@ -98,6 +98,60 @@ test("movie details screen should call close fnc", () => {
   expect(closeDetails).toBeCalled();
 });
 
+test("movie Details imdb link should be visible", () => {
+  const closeDetails = jest.fn();
+  const getRecommendedMovies = jest.fn();
+  const testValue = "placeholder";
+  const testObj = {
+    content: "myContent",
+    wikiLink: "",
+    imdbLink: "hey",
+    id: 0,
+  };
+  const { getByText } = render(
+    <MovieDetail
+      info={testObj}
+      title={testValue}
+      imgSrc={testValue}
+      score={0}
+      closeDetails={closeDetails}
+      visibility={testValue}
+      getRecommendedMovies={getRecommendedMovies}
+    />
+  );
+
+  const imdb = getByText("Imdb");
+
+  expect(imdb).toBeVisible();
+});
+
+test("movie Details wiki link should be visible", () => {
+  const closeDetails = jest.fn();
+  const getRecommendedMovies = jest.fn();
+  const testValue = "placeholder";
+  const testObj = {
+    content: "myContent",
+    wikiLink: "hey",
+    imdbLink: "",
+    id: 0,
+  };
+  const { getByText } = render(
+    <MovieDetail
+      info={testObj}
+      title={testValue}
+      imgSrc={testValue}
+      score={0}
+      closeDetails={closeDetails}
+      visibility={testValue}
+      getRecommendedMovies={getRecommendedMovies}
+    />
+  );
+
+  const wiki = getByText("Wikipedia");
+
+  expect(wiki).toBeVisible();
+});
+
 test("movie Details should trigger recommended movie fetch", () => {
   const closeDetails = jest.fn();
   const getRecommendedMovies = jest.fn();
