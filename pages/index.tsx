@@ -147,6 +147,7 @@ const Home: NextPage = () => {
                 score={movie.score}
                 key={+movie.id}
                 movieId={+movie.id}
+                genres={movie.genres}
                 fn={showMovieDetails}
               />
             ))}

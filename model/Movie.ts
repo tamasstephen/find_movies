@@ -3,5 +3,6 @@ export interface Movie {
   name: string;
   overview: string;
   score: number;
+  genres: { name: string }[];
   img: { url: string };
 }

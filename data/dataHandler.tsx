@@ -12,6 +12,9 @@ export const dataHandler = {
                     overview
                     releaseDate
                     score
+                    genres { 
+                      name
+                    }
                     img: poster {
                         url: custom(size: "w185_and_h278_bestv2")
                     }
