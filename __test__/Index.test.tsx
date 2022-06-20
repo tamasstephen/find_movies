@@ -1,5 +1,5 @@
 import Home from "../pages/index";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { movieService } from "../service/movieService";
 import { dataHandler } from "../data/dataHandler";
@@ -83,8 +83,8 @@ describe("Rendering home page components with state change", () => {
     const newElements = await screen.findAllByText("Test");
     fireEvent.click(newElements[0]);
     const detailsPage = await screen.findByTestId("movie-details");
-    //TODO: react test lib wait if does not work comment -> what I checked, why setTimeout
-    setTimeout(() => expect(detailsPage).not.toHaveClass("hideElement"));
+
+    await waitFor(() => expect(detailsPage).not.toHaveClass("hideElement"));
   });
 
   test("related movie link loads new movies", async () => {
