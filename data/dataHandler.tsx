@@ -10,13 +10,12 @@ export const dataHandler = {
                     id
                     name
                     overview
-                    releaseDate
                     score
                     genres { 
                       name
                     }
                     img: poster {
-                        url: custom(size: "w185_and_h278_bestv2")
+                        url: custom(size: "w342")
                     }
                     }
                 }
@@ -48,9 +47,11 @@ export const dataHandler = {
                       name
                       overview
                       score
-                      releaseDate
+                    genres { 
+                      name
+                    }
                       img: poster {
-                        url: custom(size: "w185_and_h278_bestv2")
+                        url: custom(size: "w342")
                     }
                     }
                   } 
