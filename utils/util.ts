@@ -6,4 +6,10 @@ export const util = {
   generateId(): number {
     return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
   },
+
+  shortenText(text: string, textLength: number): string {
+    return text.length > textLength
+      ? text.substring(0, textLength).trim() + "..."
+      : text;
+  },
 };
