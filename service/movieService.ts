@@ -41,9 +41,11 @@ export const movieService = {
       }
       result.wikiLink = `https://en.wikipedia.org/wiki/${wikiTitle}`;
     }
-    if (imdbLinkEndpoint.results !== null) {
-      result.imdbLink = `https://www.imdb.com/title/${imdbLinkEndpoint.results[0].id}/`;
-    } else if (hasWikiPage) {
+    const resultHasImdbLink = this.isImdbLinkSetViaImdb(
+      imdbLinkEndpoint,
+      result
+    );
+    if (!resultHasImdbLink && hasWikiPage) {
       await this.getFallBackImdbLink(wikiTitle, result, movieId);
     }
     return {
@@ -53,6 +55,17 @@ export const movieService = {
       imgSrc: imageSrc,
       score: score,
     };
+  },
+
+  isImdbLinkSetViaImdb(
+    imdbResult: imdbMovieList,
+    detailResult: Result
+  ): boolean {
+    const hasImdbLink = imdbResult.results !== null;
+    if (hasImdbLink) {
+      detailResult.imdbLink = `https://www.imdb.com/title/${imdbResult.results[0].id}/`;
+    }
+    return hasImdbLink;
   },
 
   getMovieDetailsDefaultState(): DetailProps {
@@ -96,6 +109,7 @@ export const movieService = {
         const data = await dataHandler.getCategoriesForMovie(movie.pageid);
         const categories = data.query.pages[movie.pageid].categories;
         if (categories) {
+          //TODO: extract to fnc
           const isFilm: { ns: number; title: string } | undefined =
             categories.find((category: { ns: number; title: string }) =>
               category.title.includes("film")
@@ -103,6 +117,7 @@ export const movieService = {
           if (isFilm) {
             return movie;
           }
+          // --- end
         } else {
           return movie;
         }
