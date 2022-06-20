@@ -3,13 +3,14 @@
 # Movie Finder
 
 ## Description
-Frontend application to find movies by the movie title.
+Movie Finder is a frontend application to find movies by their title.
 The app lists all the related movies on the page.
-Clicking the movie title the following appear on the screen:
-- short description (from the related wiki page if available)
-- imdb link (if available via imdb api)
-- wiki link (if available via wiki api)
-- a link to query the related movies
+The app provides a detail page for movies, containing the following:
+- a short description (from the related wiki page if available)
+- an imdb link (if available via imdb api)
+- a wiki link (if available via wiki api)
+- a link to the related movies
+
 <p align="center">
 <img src="./app.png" alt="App" style="width: 200px" />
 </p>
@@ -18,7 +19,7 @@ Clicking the movie title the following appear on the screen:
 [Click the link to visit the related webpage](https://movie-finde.herokuapp.com/)
 
 ## Technologies
-The app was built  with Next.js
+The app was built with Next.js
 
 ## Tests
 To run the tests: `npm run test`
