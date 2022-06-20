@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../styles/components/MovieCard.module.css";
 import Genres from "./Genres";
+import { util } from "../utils/util";
 
 interface Props {
   title: string;
@@ -35,7 +36,7 @@ const MovieCard = ({
         <h3 className={styles.cardTitle}>
           <a onClick={() => fn(title, score, imgSrc, movieId)}> {title}</a>
         </h3>
-        <p className={styles.paragraph}>{overview}</p>
+        <p className={styles.paragraph}>{util.shortenText(overview, 250)}</p>
         <p className={styles.rating}>
           Rating: <span>{score}</span>
         </p>
