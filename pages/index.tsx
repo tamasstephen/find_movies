@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import { useState, SyntheticEvent } from "react";
-import Input from "../component/Input";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { dataHandler } from "../data/dataHandler";
@@ -8,10 +7,8 @@ import { Movie } from "../model/Movie";
 import MovieDetail, {
   DetailState as DetailProps,
 } from "../component/MovieDetail";
-import Header from "../component/Header";
 import Spinner from "../component/Spinner";
 import { movieService } from "../service/movieService";
-import Form from "../component/Form";
 import MovieContainer from "../component/MovieContainer";
 import Search from "../component/Search";
 

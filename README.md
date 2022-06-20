@@ -10,8 +10,10 @@ Clicking the movie title the following appear on the screen:
 - imdb link (if available via imdb api)
 - wiki link (if available via wiki api)
 - a link to query the related movies
-
+<div style="display:flex; justify-content:center">
+<img src="./movie_finder_mobile2.png" alt="App" style="width: 200px" />
 <img src="./movie_find_mobile.png" alt="App" style="width: 200px" />
+</div>
 
 ## Working app
 [Click the link to visit the related webpage](https://movie-finde.herokuapp.com/)
