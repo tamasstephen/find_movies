@@ -1,16 +1,26 @@
 import React from "react";
 import styles from "../styles/components/MovieCard.module.css";
+import Genres from "./Genres";
 
 interface Props {
   title: string;
   imgUrl: string;
   overview: string;
+  genres: { name: string }[];
   score: number;
   movieId: number;
   fn: Function;
 }
 
-const MovieCard = ({ title, imgUrl, overview, score, fn, movieId }: Props) => {
+const MovieCard = ({
+  title,
+  imgUrl,
+  overview,
+  score,
+  fn,
+  movieId,
+  genres,
+}: Props) => {
   const imgSrc = imgUrl ? imgUrl : "/placeholder.png";
   return (
     <div className={styles.cardContainer}>
@@ -29,6 +39,7 @@ const MovieCard = ({ title, imgUrl, overview, score, fn, movieId }: Props) => {
         <p className={styles.rating}>
           Rating: <span>{score}</span>
         </p>
+        <Genres genres={genres} />
       </div>
     </div>
   );
