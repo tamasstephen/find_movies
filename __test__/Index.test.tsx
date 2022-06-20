@@ -1,5 +1,5 @@
 import Home from "../pages/index";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { movieService } from "../service/movieService";
 import { dataHandler } from "../data/dataHandler";
@@ -23,25 +23,35 @@ const exampleMovieList = [
   },
 ];
 
-global.scrollTo = jest.fn();
-global.fetch = jest.fn(
-  (input: RequestInfo | URL, init?: RequestInit | undefined): Promise<any> => {
-    const myInput = input as string;
-    if (myInput.includes("https://tmdb.sandbox.zoosh.ie/dev/graphql")) {
-      return Promise.resolve({
-        status: 200,
-        json: () => {
-          return {
-            data: {
-              searchMovies: [...exampleMovieList],
-            },
-          };
-        },
-      });
+
+beforeEach(() => {
+  global.scrollTo = jest.fn();
+  global.fetch = jest.fn(
+    (
+      input: RequestInfo | URL,
+      init?: RequestInit | undefined
+    ): Promise<any> => {
+      const myInput = input as string;
+      if (myInput.includes("https://tmdb.sandbox.zoosh.ie/dev/graphql")) {
+        return Promise.resolve({
+          status: 200,
+          json: () => {
+            return {
+              data: {
+                searchMovies: [...exampleMovieList],
+              },
+            };
+          },
+        });
+      }
+      return Promise.resolve({ data: { data: { searchMovies: [] } } });
     }
-    return Promise.resolve({ data: { data: { searchMovies: [] } } });
-  }
-);
+  );
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
 describe("Rendering home page components with state change", () => {
   test("details is not visible after pageload", () => {
@@ -73,7 +83,8 @@ describe("Rendering home page components with state change", () => {
     const newElements = await screen.findAllByText("Test");
     fireEvent.click(newElements[0]);
     const detailsPage = await screen.findByTestId("movie-details");
-    setTimeout(() => expect(detailsPage).not.toHaveClass("hideElement"));
+
+    await waitFor(() => expect(detailsPage).not.toHaveClass("hideElement"));
   });
 
   test("related movie link loads new movies", async () => {

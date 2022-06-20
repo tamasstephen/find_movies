@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import styles from "../styles/components/Input.module.css";
 
 interface Props {
@@ -9,6 +9,17 @@ interface Props {
 }
 
 const Input = ({ value, setValue, label, name }: Props) => {
+  function removeFocus(event: SyntheticEvent) {
+    const myEvent = event.nativeEvent as KeyboardEvent;
+    console.log(event);
+    if (myEvent.key === "Enter") {
+      const input = event.target as HTMLInputElement;
+      setTimeout(() => {
+        input.blur();
+      });
+    }
+  }
+
   return (
     <div>
       <label className={styles.label} htmlFor={name}>
@@ -22,6 +33,7 @@ const Input = ({ value, setValue, label, name }: Props) => {
         name={name}
         placeholder={label}
         onChange={(event) => setValue(event)}
+        onKeyDown={(event) => removeFocus(event)}
         required
       />
     </div>

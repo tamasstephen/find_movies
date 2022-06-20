@@ -27,7 +27,8 @@ const MovieDetail = ({
   visibility,
   getRecommendedMovies,
 }: Props) => {
-  const detailContent = info.content !== "" ? info.content : "Not Available!";
+  const detailContent =
+    info.content !== "" ? info.content : "Description not available!";
 
   return (
     <div

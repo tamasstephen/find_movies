@@ -1,3 +1,5 @@
+<link href="./mdstyle.css" rel="stylesheet"></link>
+
 # Movie Finder
 
 ## Description
@@ -8,6 +10,9 @@ Clicking the movie title the following appear on the screen:
 - imdb link (if available via imdb api)
 - wiki link (if available via wiki api)
 - a link to query the related movies
+<p align="center">
+<img src="./app.png" alt="App" style="width: 200px" />
+</p>
 
 ## Working app
 [Click the link to visit the related webpage](https://movie-finde.herokuapp.com/)

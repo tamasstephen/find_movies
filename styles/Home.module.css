@@ -14,7 +14,6 @@
   padding: 8rem 1rem 4rem;
 }
 
-.cardContainer,
 .containerWrapper {
   display: flex;
   flex-direction: column;
@@ -25,10 +24,6 @@
   align-items: center;
 }
 
-.cardContainer{
-  padding: 1rem;
-  gap: 1rem;
-}
 
 @media screen and (min-width: 768px){
   .upper {
@@ -36,14 +31,10 @@
     align-items: center;
   }
 
-  .container,
-  .cardContainer {
+  .container {
     max-width: 50%;
   }
 
-  .cardContainer{
-    padding: 0;
-  }
 }
 
 @media screen and (min-width: 1024px){
@@ -52,9 +43,6 @@
     max-width: 600px;
   }
 
-  .cardContainer{
-    max-width: 800px;
-  }
 
   .containerWrapper {
     padding-top: 4rem;

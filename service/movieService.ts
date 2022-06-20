@@ -36,14 +36,13 @@ export const movieService = {
     const movieId: string = Object.keys(pageDetails.query.pages)[0];
     const hasWikiPage = movieId !== "-1";
     if (hasWikiPage) {
-      if (pageDetails.query.pages[movieId].hasOwnProperty("extract")) {
-        result.content = pageDetails.query.pages[movieId].extract;
-      }
-      result.wikiLink = `https://en.wikipedia.org/wiki/${wikiTitle}`;
+      this.setWikiData(pageDetails, movieId, result, wikiTitle);
     }
-    if (imdbLinkEndpoint.results !== null) {
-      result.imdbLink = `https://www.imdb.com/title/${imdbLinkEndpoint.results[0].id}/`;
-    } else if (hasWikiPage) {
+    const resultHasImdbLink = this.isImdbLinkSetViaImdb(
+      imdbLinkEndpoint,
+      result
+    );
+    if (!resultHasImdbLink && hasWikiPage) {
       await this.getFallBackImdbLink(wikiTitle, result, movieId);
     }
     return {
@@ -53,6 +52,30 @@ export const movieService = {
       imgSrc: imageSrc,
       score: score,
     };
+  },
+
+  setWikiData(
+    wikiDetails: { query: { pages: any } },
+    movieId: string,
+    detailResult: Result,
+    wikiLinkTitle: string
+  ) {
+    if (wikiDetails.query.pages[movieId].hasOwnProperty("extract")) {
+      detailResult.content = wikiDetails.query.pages[movieId].extract;
+    }
+    detailResult.wikiLink = `https://en.wikipedia.org/wiki/${wikiLinkTitle}`;
+  },
+
+  isImdbLinkSetViaImdb(
+    imdbResult: imdbMovieList,
+    detailResult: Result
+  ): boolean {
+    const hasImdbLink =
+      imdbResult.results.length > 1 && imdbResult.results !== null;
+    if (hasImdbLink) {
+      detailResult.imdbLink = `https://www.imdb.com/title/${imdbResult.results[0].id}/`;
+    }
+    return hasImdbLink;
   },
 
   getMovieDetailsDefaultState(): DetailProps {
@@ -95,20 +118,28 @@ export const movieService = {
       ) {
         const data = await dataHandler.getCategoriesForMovie(movie.pageid);
         const categories = data.query.pages[movie.pageid].categories;
-        if (categories) {
-          const isFilm: { ns: number; title: string } | undefined =
-            categories.find((category: { ns: number; title: string }) =>
-              category.title.includes("film")
-            );
-          if (isFilm) {
-            return movie;
-          }
-        } else {
-          return movie;
-        }
+        const isFilm = this.getMovieByNameAndCategory(categories, movie);
+        if (isFilm) return isFilm;
       }
     }
     return movies[0];
+  },
+
+  getMovieByNameAndCategory(
+    categories: { ns: number; title: string }[] | undefined | null,
+    movie: { ns: number; title: string; pageid: number}
+  ):  { ns: number; title: string; pageid: number} | undefined {
+    if (categories) {
+      const isFilm: { ns: number; title: string } | undefined = categories.find(
+        (category: { ns: number; title: string }) =>
+          category.title.includes("film")
+      );
+      if (isFilm) {
+        return movie;
+      }
+    } else {
+      return movie;
+    }
   },
 
   async getFallBackImdbLink(
