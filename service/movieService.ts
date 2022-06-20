@@ -36,10 +36,7 @@ export const movieService = {
     const movieId: string = Object.keys(pageDetails.query.pages)[0];
     const hasWikiPage = movieId !== "-1";
     if (hasWikiPage) {
-      if (pageDetails.query.pages[movieId].hasOwnProperty("extract")) {
-        result.content = pageDetails.query.pages[movieId].extract;
-      }
-      result.wikiLink = `https://en.wikipedia.org/wiki/${wikiTitle}`;
+      this.setWikiData(pageDetails, movieId, result, wikiTitle);
     }
     const resultHasImdbLink = this.isImdbLinkSetViaImdb(
       imdbLinkEndpoint,
@@ -57,12 +54,26 @@ export const movieService = {
     };
   },
 
+  setWikiData(
+    wikiDetails: { query: { pages: any } },
+    movieId: string,
+    detailResult: Result,
+    wikiLinkTitle: string
+  ) {
+    if (wikiDetails.query.pages[movieId].hasOwnProperty("extract")) {
+      detailResult.content = wikiDetails.query.pages[movieId].extract;
+    }
+    detailResult.wikiLink = `https://en.wikipedia.org/wiki/${wikiLinkTitle}`;
+  },
+
   isImdbLinkSetViaImdb(
     imdbResult: imdbMovieList,
     detailResult: Result
   ): boolean {
-    const hasImdbLink = imdbResult.results !== null;
+    const hasImdbLink =
+      imdbResult.results.length > 1 && imdbResult.results !== null;
     if (hasImdbLink) {
+      console.log(imdbResult);
       detailResult.imdbLink = `https://www.imdb.com/title/${imdbResult.results[0].id}/`;
     }
     return hasImdbLink;
