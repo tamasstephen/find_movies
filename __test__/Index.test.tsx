@@ -11,6 +11,7 @@ const exampleMovieList = [
     overview: "Test",
     score: 5,
     img: { url: "myUrl" },
+    genres: [{ name: "Comedy" }],
   },
   {
     id: "124",
@@ -18,6 +19,7 @@ const exampleMovieList = [
     overview: "Test",
     score: 5,
     img: { url: "myUrl" },
+    genres: [{ name: "Documentary" }],
   },
 ];
 
