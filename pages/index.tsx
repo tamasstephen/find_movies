@@ -5,7 +5,6 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { dataHandler } from "../data/dataHandler";
 import { Movie } from "../model/Movie";
-import MovieCard from "../component/MovieCard";
 import MovieDetail, {
   DetailState as DetailProps,
 } from "../component/MovieDetail";
@@ -14,10 +13,10 @@ import Spinner from "../component/Spinner";
 import { movieService } from "../service/movieService";
 import Form from "../component/Form";
 import MovieContainer from "../component/MovieContainer";
+import Search from "../component/Search";
 
 const Home: NextPage = () => {
   const [spinnerVisibility, setSpinnerVisibility] = useState("hideElement");
-  const [searchValue, setSearchValue] = useState("");
   const [bodyScroll, setBodyHeight] = useState("");
   const [searchedMovies, setSearchedMovies]: [Movie[], Function] = useState([]);
   const [detailVisibility, setDetailVisibility] = useState("hideElement");
@@ -33,12 +32,7 @@ const Home: NextPage = () => {
     });
   }
 
-  function handleInputChange(event: SyntheticEvent) {
-    const input = event.target as HTMLInputElement;
-    setSearchValue(input.value);
-  }
-
-  async function handleSubmit(event: SyntheticEvent) {
+  async function handleSubmit(event: SyntheticEvent, searchValue: string) {
     preventBodyScroll();
     showSpinner();
     event.preventDefault();
@@ -122,21 +116,7 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <div className={styles.upper}>
           <div className={styles.container}>
-            {/* TODO: Extract to a component push the submit back*/}
-            <Header
-              firstLine="Find your "
-              secondLine="favourite"
-              colourText=" movies"
-            />
-            <Form handleSubmit={handleSubmit}>
-              <Input
-                value={searchValue}
-                setValue={handleInputChange}
-                label={"Find a movie..."}
-                name="text"
-              />
-              <button type="submit">Find Movie</button>
-            </Form>
+            <Search handleSubmit={handleSubmit} />
           </div>
         </div>
         <div className={styles.containerWrapper}>
