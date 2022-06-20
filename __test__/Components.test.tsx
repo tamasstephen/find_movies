@@ -67,6 +67,7 @@ describe("Single component validation", () => {
         key={1}
         movieId={1}
         fn={showDetails}
+        genres={[{ name: "Comedy" }]}
       />
     );
     const myLink = getByText(testTitle);
