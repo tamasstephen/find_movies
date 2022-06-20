@@ -7,7 +7,11 @@ interface Props {
 
 const Form = ({ children, handleSubmit }: Props) => {
   return (
-    <form role="form" onSubmit={(event: SyntheticEvent) => handleSubmit(event)}>
+    <form
+      role="form"
+      autoComplete="off"
+      onSubmit={(event: SyntheticEvent) => handleSubmit(event)}
+    >
       {children}
     </form>
   );
