@@ -13,6 +13,7 @@ import Header from "../component/Header";
 import Spinner from "../component/Spinner";
 import { movieService } from "../service/movieService";
 import Form from "../component/Form";
+import MovieContainer from "../component/MovieContainer";
 
 const Home: NextPage = () => {
   const [spinnerVisibility, setSpinnerVisibility] = useState("hideElement");
@@ -121,6 +122,7 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <div className={styles.upper}>
           <div className={styles.container}>
+            {/* TODO: Extract to a component push the submit back*/}
             <Header
               firstLine="Find your "
               secondLine="favourite"
@@ -138,20 +140,7 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className={styles.containerWrapper}>
-          <div className={styles.cardContainer}>
-            {searchedMovies.map((movie: Movie) => (
-              <MovieCard
-                title={movie.name}
-                imgUrl={movie.img?.url}
-                overview={movie.overview}
-                score={movie.score}
-                key={+movie.id}
-                movieId={+movie.id}
-                genres={movie.genres}
-                fn={showMovieDetails}
-              />
-            ))}
-          </div>
+          <MovieContainer movies={searchedMovies} fn={showMovieDetails} />
         </div>
       </main>
     </div>
